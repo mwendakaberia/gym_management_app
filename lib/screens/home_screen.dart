@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:the_bar_gym/pages/pages.dart';
 import 'package:the_bar_gym/screens/profile_screen.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
@@ -140,10 +141,10 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) => const Dialog(
+                      builder: (BuildContext context) => Dialog(
                         child: AspectRatio(
                           aspectRatio: 8 / 7,
-                          child: QRScannerPage(),
+                          child: QRScreen(),
                         ),
                       ),
                     );
