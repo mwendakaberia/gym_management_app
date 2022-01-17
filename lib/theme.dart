@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class AppColors {
-  static const secondary = Color(0xFF32C67E);
-  static const accent = Color(0xFF32C67E);
+  static const secondary = Color(0xFFCC0025);
+  static const accent = Color(0xFFCC0025);
   static const textDark = Color(0xFF53585A);
   static const textLigth = Color(0xFFF5F5F5);
   static const textFaded = Color(0xFF9899A5);

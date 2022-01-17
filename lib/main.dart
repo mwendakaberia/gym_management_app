@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: appTheme.light,
       darkTheme: appTheme.dark,
       themeMode: ThemeMode.dark,
-      home: QRScreen(),
+      home: HomeScreen(),
     );
   }
 }
