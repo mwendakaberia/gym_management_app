@@ -39,6 +39,8 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             const _SignOutButton(),
+            const Divider(),
+            Text('Light/Dark Mode'),
           ],
         ),
       ),

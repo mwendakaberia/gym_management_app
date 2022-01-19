@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:the_bar_gym/pages/pages.dart';
+import 'package:the_bar_gym/pages/qr_scanner_pagetest.dart';
 import 'package:the_bar_gym/screens/profile_screen.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
-  final ValueNotifier<String> title = ValueNotifier('Messages');
+  final ValueNotifier<String> title = ValueNotifier('pageTitles[pageIndex]');
 
   final pages = const [
     WelcomePage(),
@@ -84,9 +85,20 @@ class _MainAppBarState extends State<MainAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: false,
-      title: ValueListenableBuilder(
-        valueListenable: widget.title,
-        builder: (BuildContext context, String value, _) => Text(value),
+      title: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.iconLight.withOpacity(0.3),
+              spreadRadius: 8,
+              blurRadius: 24,
+            ),
+          ],
+        ),
+        child: ValueListenableBuilder(
+          valueListenable: widget.title,
+          builder: (BuildContext context, String value, _) => Text(value),
+        ),
       ),
       leadingWidth: 54,
       leading: Align(
@@ -111,24 +123,24 @@ class _MainAppBarState extends State<MainAppBar> {
                 child: Container(
                   decoration: BoxDecoration(
                     boxShadow: [
-                      BoxShadow(
-                        color: hasBeenPressed
-                            ? AppColors.accent.withOpacity(0.3)
-                            : AppColors.iconLight,
-                        spreadRadius: 8,
-                        blurRadius: 24,
-                      ),
+                      // BoxShadow(
+                      //   color: hasBeenPressed
+                      //       ? AppColors.accent.withOpacity(0.3)
+                      //       : AppColors.iconLight,
+                      //   spreadRadius: 8,
+                      //   blurRadius: 24,
+                      // ),
                     ],
                   ),
-                  child: Text(
-                    'LVL UP',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      color: hasBeenPressed
-                          ? AppColors.accent
-                          : AppColors.iconLight,
-                    ),
-                  ),
+                  // child: Text(
+                  //   'LVL UP',
+                  //   style: TextStyle(
+                  //     fontWeight: FontWeight.w900,
+                  //     color: hasBeenPressed
+                  //         ? AppColors.accent
+                  //         : AppColors.iconLight,
+                  //   ),
+                  // ),
                 ),
               ),
             ),
@@ -208,15 +220,21 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
                   color: AppColors.secondary,
                   icon: CupertinoIcons.qrcode_viewfinder,
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => Dialog(
-                        child: AspectRatio(
-                          aspectRatio: 8 / 7,
-                          child: ProfileScreen(),
-                        ),
-                      ),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return Scanner();
+                      }),
                     );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) => Dialog(
+                    //     child: AspectRatio(
+                    //       aspectRatio: 8 / 7,
+                    //       child: QRScannerPage(),
+                    //     ),
+                    //   ),
+                    // );
                   },
                 ),
               ),

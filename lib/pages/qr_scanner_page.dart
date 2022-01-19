@@ -1,369 +1,170 @@
-import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:the_bar_gym/pages/pages.dart';
-import 'package:the_bar_gym/screens/screens.dart';
-import 'package:the_bar_gym/widgest/avatars.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:the_bar_gym/theme.dart';
 import 'package:the_bar_gym/widgest/widgets.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
-import '../theme.dart';
-
-class QRScreen extends StatefulWidget {
-  static Route get route => MaterialPageRoute(
-        builder: (context) => QRScreen(),
-      );
+class QRScanner extends StatefulWidget {
+  const QRScanner({Key? key}) : super(key: key);
 
   @override
-  _QRScreenState createState() => _QRScreenState();
+  State<StatefulWidget> createState() => _QRScannerState();
 }
 
-class _QRScreenState extends State<QRScreen> {
-  String _scanBarcode = 'Unknown';
+class _QRScannerState extends State<QRScanner> {
+  Barcode? result;
+  QRViewController? controller;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
+  // In order to get hot reload to work we need to pause the camera if the platform
+  // is android, or resume the camera if the platform is iOS.
   @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<void> startBarcodeScanStream() async {
-    FlutterBarcodeScanner.getBarcodeStreamReceiver(
-            '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
-        .listen((barcode) => print(barcode));
-  }
-
-  Future<void> scanQR() async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-
-      print(barcodeScanRes);
-      print('testtsetst');
-      switch (barcodeScanRes) {
-        case 'https://flowcode.com/p/VegzQnKjB':
-          {
-            return showDialog<void>(
-              context: context,
-              barrierDismissible: false, // user must tap button!
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Workout 1'),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: const <Widget>[
-                        Text('WorkOut 1'),
-                        Text('Demo or Workout Log?'),
-                      ],
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('Demo'),
-                      onPressed: () {
-                        // Navigator.pushNamed(context, HackSquat.id);
-                      },
-                    ),
-                    TextButton(
-                      child: const Text('Log'),
-                      onPressed: () {
-                        // Navigator.pushNamed(context, HackSquatLog.id);
-                      },
-                    ),
-                    TextButton(
-                      child: const Text('Dismiss'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          }
-          break;
-        case 'https://qrstrengthbargym.page.link/Leg2':
-          {
-            // Navigator.pushNamed(context, HackSquat.id);
-          }
-          break;
-        case 'https://qrstrengthbargym.page.link/Leg3':
-          {
-            // Navigator.pushNamed(context, InverseCurl.id);
-          }
-          break;
-        case 'https://qrstrengthbargym.page.link/Leg4':
-          {
-            // Navigator.pushNamed(context, LegExtension.id);
-          }
-          break;
-        case 'https://qrstrengthbargym.page.link/Leg5':
-          {
-            // Navigator.pushNamed(context, LegPress.id);
-          }
-          break;
-
-          break;
-        default:
-          {
-            //statements;
-          }
-          break;
-      }
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
-  }
-
-  final ValueNotifier<int> pageIndex = ValueNotifier(0);
-  final ValueNotifier<String> title = ValueNotifier('Messages');
-
-  final pages = const [
-    WelcomePage(),
-    StreamPage(),
-    VideoLibraryPage(),
-    LogPage(),
-  ];
-
-  final pageTitles = const [
-    'Messages',
-    'Notifications',
-    'Calls',
-    'Contacts',
-  ];
-
-  void _onNavigationItemSelected(index) {
-    title.value = pageTitles[index];
-    pageIndex.value = index;
+    controller!.resumeCamera();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: ValueListenableBuilder(
-          valueListenable: title,
-          builder: (BuildContext context, String value, _) => Text(value),
-        ),
-        leadingWidth: 54,
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: IconBackground(
-            icon: Icons.search,
-            onTap: () {},
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 24.0),
-            child: Hero(
-              tag: 'hero-profile-picture',
-              child: Avatar.small(
-                url: 'context.currentUserImage',
-                onTap: () {
-                  Navigator.of(context).push(ProfileScreen.route);
-                },
-              ),
+      body: Column(
+        children: <Widget>[
+          Expanded(flex: 4, child: _buildQrView(context)),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                if (result != null)
+                  Text(
+                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                else
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: const [
+                        Text(
+                          'QR Strength',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Text(
+                          'A Trainer in Your Pocket',
+                          style: TextStyle(
+                              color: AppColors.accent,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: TextButton(
+                        onPressed: () async {
+                          await controller?.pauseCamera();
+                        },
+                        child: const Text('Exit',
+                            style: TextStyle(
+                                fontSize: 20, color: AppColors.accent)),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: IconBackground(
+                        icon: CupertinoIcons.arrow_2_squarepath,
+                        onTap: () async {
+                          await controller?.flipCamera();
+                          setState(() {});
+                        },
+                      ),
+                    ),
+
+                    // Container(
+                    //   margin: const EdgeInsets.all(8),
+                    //   child: ElevatedButton(
+                    //     onPressed: () async {
+                    //       await controller?.resumeCamera();
+                    //     },
+                    //     child: const Text('Log Workout',
+                    //         style: TextStyle(fontSize: 20)),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   margin: const EdgeInsets.all(8),
+                    //   child: ElevatedButton(
+                    //     onPressed: () async {
+                    //       await controller?.resumeCamera();
+                    //     },
+                    //     child: const Text('Log Workout',
+                    //         style: TextStyle(fontSize: 20)),
+                    //   ),
+                    // )
+                  ],
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
-      body: ValueListenableBuilder(
-        valueListenable: pageIndex,
-        builder: (BuildContext context, int value, _) {
-          return pages[value];
-        },
-      ),
-      bottomNavigationBar: _BottomNavigationBar(
-        onItemSelected: _onNavigationItemSelected,
-      ),
     );
   }
-}
 
-class _BottomNavigationBar extends StatefulWidget {
-  const _BottomNavigationBar({
-    Key? key,
-    required this.onItemSelected,
-  }) : super(key: key);
+  Widget _buildQrView(BuildContext context) {
+    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 200.0
+        : 300.0;
+    // To ensure the Scanner view is properly sizes after rotation
+    // we need to listen for Flutter SizeChanged notification and update controller
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+          borderColor: AppColors.accent,
+          borderRadius: 10,
+          borderLength: 30,
+          borderWidth: 10,
+          cutOutSize: scanArea),
+      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    );
+  }
 
-  final ValueChanged<int> onItemSelected;
-
-  @override
-  __BottomNavigationBarState createState() => __BottomNavigationBarState();
-}
-
-class __BottomNavigationBarState extends State<_BottomNavigationBar> {
-  var selectedIndex = 0;
-
-  void handleItemSelected(int index) {
+  void _onQRViewCreated(QRViewController controller) {
     setState(() {
-      selectedIndex = index;
+      this.controller = controller;
     });
-    widget.onItemSelected(index);
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        result = scanData;
+      });
+    });
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('no Permission')),
+      );
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    return Card(
-      color: (brightness == Brightness.light) ? Colors.transparent : null,
-      elevation: 0,
-      margin: const EdgeInsets.all(0),
-      child: SafeArea(
-        top: false,
-        bottom: true,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16, left: 8, right: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _NavigationBarItem(
-                index: 0,
-                lable: 'Front Desk',
-                icon: CupertinoIcons.house_alt,
-                isSelected: (selectedIndex == 0),
-                onTap: handleItemSelected,
-              ),
-              _NavigationBarItem(
-                index: 1,
-                lable: 'Locker Room',
-                icon: CupertinoIcons.bubble_left_bubble_right,
-                isSelected: (selectedIndex == 1),
-                onTap: handleItemSelected,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: GlowingActionButton(
-                  color: AppColors.secondary,
-                  icon: CupertinoIcons.qrcode_viewfinder,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => Dialog(
-                        child: AspectRatio(
-                          aspectRatio: 8 / 7,
-
-                          /// TODO: pass down the scanQR() so when the button is clicked the scanner opens,
-                          /// i brought this over from different code and having a hard time incorporating it
-                          child: Text('QR Scanner Here'),
-
-                          // scanQR(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              _NavigationBarItem(
-                index: 2,
-                lable: 'Demos',
-                icon: CupertinoIcons.play_rectangle,
-                isSelected: (selectedIndex == 2),
-                onTap: handleItemSelected,
-              ),
-              _NavigationBarItem(
-                index: 3,
-                lable: 'Logs',
-                icon: CupertinoIcons.square_list,
-                isSelected: (selectedIndex == 3),
-                onTap: handleItemSelected,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _NavigationBarItem extends StatelessWidget {
-  const _NavigationBarItem({
-    Key? key,
-    required this.index,
-    required this.lable,
-    required this.icon,
-    this.isSelected = false,
-    required this.onTap,
-  }) : super(key: key);
-
-  final int index;
-  final String lable;
-  final IconData icon;
-  final bool isSelected;
-  final ValueChanged<int> onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        onTap(index);
-      },
-      child: SizedBox(
-        width: 70,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 22,
-              color: isSelected ? AppColors.secondary : null,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              lable,
-              style: isSelected
-                  ? const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondary,
-                    )
-                  : const TextStyle(fontSize: 11),
-            ),
-          ],
-        ),
-      ),
-    );
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
   }
 }
