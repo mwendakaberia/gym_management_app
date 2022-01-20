@@ -19,12 +19,12 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
-  final ValueNotifier<String> title = ValueNotifier('pageTitles[pageIndex]');
+  final ValueNotifier<String> title = ValueNotifier('Welcome To The Bar');
 
-  final pages = const [
+  final pages = [
     WelcomePage(),
     StreamPage(),
-    VideoLibraryPage(),
+    TabBarDemo(),
     LogPage(),
   ];
 
@@ -149,7 +149,7 @@ class _MainAppBarState extends State<MainAppBar> {
               child: Hero(
                 tag: 'hero-profile-picture',
                 child: Avatar.small(
-                  url: 'context.currentUserImage',
+                  url: null,
                   onTap: () {
                     Navigator.of(context).push(ProfileScreen.route);
                   },

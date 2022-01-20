@@ -7,7 +7,7 @@ class GlowingActionButton extends StatelessWidget {
     Key? key,
     required this.color,
     required this.icon,
-    this.size = 54,
+    this.size = 64,
     required this.onPressed,
   }) : super(key: key);
 
@@ -24,8 +24,8 @@ class GlowingActionButton extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.3),
-            spreadRadius: 8,
+            color: color.withOpacity(0.5),
+            spreadRadius: 10,
             blurRadius: 24,
           ),
         ],

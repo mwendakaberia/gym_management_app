@@ -12,6 +12,8 @@ environment:
   sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
+
+
   js: ^0.6.3
   flutter:
     sdk: flutter
@@ -24,7 +26,8 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   qr_code_scanner: ^0.6.1
   url_launcher: ^6.0.3
-
+  material_dialogs: ^1.1.1
+  video_player: ^2.2.13
 dev_dependencies:
   flutter_test:
     sdk: flutter

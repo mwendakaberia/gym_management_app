@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../theme.dart';
+
 class Scanner extends StatefulWidget {
   @override
   _ScannerState createState() => _ScannerState();
@@ -20,44 +22,63 @@ class _ScannerState extends State<Scanner> {
 
   @override
   Widget build(BuildContext context) {
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 200.0
+        : 300.0;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Scanner"),
+        title: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.iconLight.withOpacity(0.3),
+                  spreadRadius: 8,
+                  blurRadius: 24,
+                ),
+              ],
+            ),
+            child: Text('QR Strength')),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Stack(
         children: [
           Column(
             children: <Widget>[
               Expanded(
-                flex: 5,
+                flex: 10,
                 child: Stack(
                   children: [
                     QRView(
-                      key: qrKey,
-                      onQRViewCreated: _onQRViewCreated,
-                    ),
-                    Center(
-                      child: Container(
-                        width: 300,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.red,
-                            width: 4,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    )
+                        key: qrKey,
+                        onQRViewCreated: _onQRViewCreated,
+                        overlay: QrScannerOverlayShape(
+                            borderColor: AppColors.accent,
+                            borderRadius: 10,
+                            borderLength: 30,
+                            borderWidth: 10,
+                            cutOutSize: scanArea)),
                   ],
                 ),
               ),
               Expanded(
                 flex: 1,
                 child: Center(
-                  child: Text('Scan a code'),
+                  child: Column(
+                    children: const [
+                      Text(
+                        'A Trainer In Your Pocket',
+                        style: TextStyle(
+                            color: AppColors.accent,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20),
+                      ),
+                      Text('Scan a code to begin'),
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ],
