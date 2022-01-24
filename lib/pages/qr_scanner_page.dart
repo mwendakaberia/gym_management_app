@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/theme.dart';
+import 'package:the_bar_gym/widgest/app_bar.dart';
 import 'package:the_bar_gym/widgest/widgets.dart';
 
 class QRScanner extends StatefulWidget {
@@ -34,6 +36,10 @@ class _QRScannerState extends State<QRScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MainAppBar(
+        title: 'QR - Strength',
+        appBar: AppBar(),
+      ),
       body: Column(
         children: <Widget>[
           Expanded(flex: 4, child: _buildQrView(context)),

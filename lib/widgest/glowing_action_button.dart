@@ -41,7 +41,7 @@ class GlowingActionButton extends StatelessWidget {
               height: size,
               child: Icon(
                 icon,
-                size: 26,
+                size: 30,
                 color: Colors.white,
               ),
             ),

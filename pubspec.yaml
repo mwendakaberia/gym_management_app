@@ -17,23 +17,40 @@ dependencies:
   js: ^0.6.3
   flutter:
     sdk: flutter
-
+  font_awesome_flutter: ^9.2.0
   cupertino_icons: ^1.0.2
   firebase_core: ^1.11.0
   google_fonts: ^2.1.0
   jiffy: ^4.1.0
   cached_network_image: ^3.1.0
   flutter_barcode_scanner: ^2.0.0
+  crypto: ^3.0.1
+  provider: ^6.0.2
   qr_code_scanner: ^0.6.1
   url_launcher: ^6.0.3
   material_dialogs: ^1.1.1
   video_player: ^2.2.13
+  firebase_auth_platform_interface: ^6.1.10
+  firebase_core_platform_interface: ^4.2.3
+  shared_preferences: ^2.0.12
+  flutter_speed_dial: ^5.0.0+1
+  intl: ^0.17.0
+  moor_flutter: ^4.0.0
+  path_provider: ^2.0.8
+
+
+
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 
   flutter_lints: ^1.0.0
+  moor_generator: ^4.6.0
+  build_runner: ^2.1.7
 
 
 flutter:
@@ -41,4 +58,6 @@ flutter:
 
   uses-material-design: true
 
-
+  assets:
+    - assets/images/no_data.png
+    - images/

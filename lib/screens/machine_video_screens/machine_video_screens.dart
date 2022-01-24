@@ -3,3 +3,17 @@ export 'package:the_bar_gym/screens/machine_video_screens/chest/incline_press.da
 export 'package:the_bar_gym/screens/machine_video_screens/chest/iso_lateral_chest_press.dart';
 export 'package:the_bar_gym/screens/machine_video_screens/chest/peck_deck.dart';
 export 'package:the_bar_gym/screens/machine_video_screens/chest/power_press.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/Back/chest_supported_row.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/Back/iso_lat_dy_row.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/Back/iso_lat_low_row.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/belt_squat.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/calf_machine.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/gluteator.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/hack_squat.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/inverse_curl.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/leg_extension.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/leg_press.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/lying_leg_curl.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/seated_leg_curl.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/standing_leg_curl.dart';
+export 'package:the_bar_gym/screens/machine_video_screens/legs/super_squat.dart';

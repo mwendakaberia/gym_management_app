@@ -37,6 +37,24 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
     PeckDeckVideoPage(),
     PowerPressVideoPage(),
   ];
+  List backPages = <dynamic>[
+    ChestSupportRowPage(),
+    IsoLatDYRowPage(),
+    IsoLatLowRowPage(),
+  ];
+  List legPages = <dynamic>[
+    BeltSquatVideoPage(),
+    CalfMachineVideoPage(),
+    GluteatorVideoPage(),
+    HackSquatVideoPage(),
+    InverseCurlVideoPage(),
+    LegExtensionVideoPage(),
+    LegPressVideoPage(),
+    LyingLegCurlVideoPage(),
+    SeatedLegCurlVideoPage(),
+    StandingLegCurlVideoPage(),
+    SuperSquatVideoPage(),
+  ];
   List backTitles = <String>[
     'Iso Lat Low Row',
     'Chest Supported Row',
@@ -201,7 +219,14 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
               title: backTitles[i],
               actions: [
                 IconsButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return backPages[i];
+                      }),
+                    );
+                  },
                   text: 'Play Demo',
                   iconData: CupertinoIcons.play,
                   color: AppColors.accent,
@@ -251,7 +276,14 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
               title: legsTitles[i],
               actions: [
                 IconsButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return legPages[i];
+                      }),
+                    );
+                  },
                   text: 'Play Demo',
                   iconData: CupertinoIcons.play,
                   color: AppColors.accent,
