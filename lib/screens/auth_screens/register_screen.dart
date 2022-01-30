@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:the_bar_gym/screens/home_screen.dart';
 import 'package:the_bar_gym/widgest/glowing_action_button.dart';
-
+import 'package:the_bar_gym/firebase.dart';
 import '../../theme.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,35 +53,44 @@ class RegistrationScreen extends StatelessWidget {
                         ),
                   ),
                   TextField(
+                    controller: userNameController,
                     decoration: InputDecoration(
                         fillColor: Colors.white,
                         border: OutlineInputBorder(),
-                        hintText: 'Enter Username'),
+                        labelText: 'Enter Username',
+                       ),
+
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+labelText: 'Enter Email',
+                        // hintText: 'Enter Email'
+    ),
+
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    obscureText: true,
+                    controller: passwordController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter Email Address',
+                      labelText: 'Enter Password',
+
                     ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter Password'),
-                  ),
+
                   SizedBox(
                     height: 10,
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: 'Repeat Password'),
-                  ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -83,11 +101,11 @@ class RegistrationScreen extends StatelessWidget {
                         GlowingSignInButton(
                           color: AppColors.iconLight,
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return HomeScreen();
-                              }),
+                            context.read<FlutterFireAuthService>().signUp(
+                                email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                            context: context,
+
                             );
                           },
                           text: 'Sign Up',

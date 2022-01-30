@@ -16,7 +16,7 @@ class _ScannerState extends State<Scanner> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 

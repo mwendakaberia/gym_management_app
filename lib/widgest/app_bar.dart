@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:the_bar_gym/screens/screens.dart';
-import 'package:the_bar_gym/pages/support_staff_page.dart';
+import 'package:the_bar_gym/pages/support_staff_pages/support_staff_page.dart';
 
 import '../theme.dart';
 import 'avatars.dart';

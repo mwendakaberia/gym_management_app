@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:the_bar_gym/screens/auth_screens/forgot_password.dart';
 import 'package:the_bar_gym/screens/home_screen.dart';
 import 'package:the_bar_gym/widgest/glowing_action_button.dart';
 
+import '../../firebase.dart';
 import '../../theme.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +55,22 @@ class LoginScreen extends StatelessWidget {
                         ),
                   ),
                   TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                         fillColor: Colors.white,
                         border: OutlineInputBorder(),
-                        hintText: 'Enter Email Address'),
+                       labelText: 'Enter Email Address'),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextField(
+                    controller: passwordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter Password',
+
+                     labelText: 'Enter Password',
                     ),
                   ),
                   Padding(
@@ -77,11 +91,10 @@ class LoginScreen extends StatelessWidget {
                         GlowingSignInButton(
                           color: AppColors.iconLight,
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return HomeScreen();
-                              }),
+                            context.read<FlutterFireAuthService>().signIn(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              context: context,
                             );
                           },
                           text: 'Login',

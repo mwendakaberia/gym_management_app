@@ -1,28 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:the_bar_gym/pages/pages.dart';
-import 'package:the_bar_gym/screens/home_screen.dart';
 import 'package:the_bar_gym/screens/screens.dart';
-import 'package:the_bar_gym/theme.dart';
-import 'package:the_bar_gym/widgest/app_bar.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
-import 'package:the_bar_gym/widgest/icons_buttons.dart';
-import 'package:the_bar_gym/widgest/spped_dials/home_page_speeddial.dart';
 
-class TabBarDemo extends StatefulWidget {
-  @override
-  _TabBarDemoState createState() => _TabBarDemoState();
-}
+import '../theme.dart';
 
-class _TabBarDemoState extends State<TabBarDemo>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    _tabController = new TabController(length: 3, vsync: this);
-    super.initState();
-  }
+class SelfieHomePage extends StatelessWidget {
+  const SelfieHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +21,11 @@ class _TabBarDemoState extends State<TabBarDemo>
               ),
             ],
           ),
-          child: Text('Workout Library'),
+          child: Text('Selfie Gallery'),
         ),
         centerTitle: false,
-        leadingWidth: 54,
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: HomeSpeedDialButton(),
-        ),
+
+
         actions: [
           Row(
             children: [
@@ -96,33 +76,7 @@ class _TabBarDemoState extends State<TabBarDemo>
             ],
           ),
         ],
-      ),
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TabBar(
-              indicatorColor: AppColors.textFaded,
-              unselectedLabelColor: Colors.white,
-              labelColor: Colors.red,
-              tabs: [
-                Tab(
-                  text: 'Chest',
-                ),
-                Tab(
-                  text: 'Back',
-                ),
-                Tab(
-                  text: 'Legs',
-                ),
-              ],
-              controller: _tabController,
-              indicatorSize: TabBarIndicatorSize.tab,
-            ),
-            TabBarLibrary(tabController: _tabController),
-          ],
-        ),
-      ),
+      )
     );
   }
 }

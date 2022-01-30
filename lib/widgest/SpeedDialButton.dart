@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:the_bar_gym/pages/log_page.dart';
+
 import 'package:the_bar_gym/pages/log_pages/exercise_list.dart';
 import 'package:the_bar_gym/pages/qr_scanner_pagetest.dart';
 

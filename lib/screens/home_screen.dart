@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:the_bar_gym/pages/pages.dart';
 import 'package:the_bar_gym/pages/qr_scanner_pagetest.dart';
+import 'package:the_bar_gym/pages/support_staff_pages/trainer_expanded_list.dart';
 import 'package:the_bar_gym/screens/profile_screen.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/widgest/SpeedDialButton.dart';

@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:the_bar_gym/pages/pages.dart';
-import 'package:the_bar_gym/pages/trainer_tab_bar_library.dart';
+import 'package:the_bar_gym/pages/support_staff_pages/trainer_tab_bar_library.dart';
 import 'package:the_bar_gym/screens/home_screen.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/theme.dart';
 import 'package:the_bar_gym/widgest/app_bar.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
 import 'package:the_bar_gym/widgest/icons_buttons.dart';
+import 'package:the_bar_gym/widgest/spped_dials/home_page_speeddial.dart';
 
 class SupportStaffPage extends StatefulWidget {
   static Route get route => MaterialPageRoute(
@@ -47,10 +48,7 @@ class _SupportStaffPageState extends State<SupportStaffPage>
         leadingWidth: 54,
         leading: Align(
           alignment: Alignment.centerRight,
-          child: IconBackground(
-            icon: CupertinoIcons.camera_circle,
-            onTap: () {},
-          ),
+          child: HomeSpeedDialButton(),
         ),
         actions: [
           Row(

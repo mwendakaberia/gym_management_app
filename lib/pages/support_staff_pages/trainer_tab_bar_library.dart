@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:the_bar_gym/pages/support_staff_pages/nutrionist_expanded_list.dart';
+import 'package:the_bar_gym/pages/support_staff_pages/physical_therapist_expanded_list.dart';
+import 'package:the_bar_gym/pages/support_staff_pages/trainer_expanded_list.dart';
 import 'package:the_bar_gym/screens/machine_video_screens/machine_video_screens.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/screens/test_1.dart';
-import '../theme.dart';
+import '../../theme.dart';
 
 class TrainerTabBarLibrary extends StatefulWidget {
   const TrainerTabBarLibrary({
@@ -75,50 +78,18 @@ class _TrainerTabBarLibraryState extends State<TrainerTabBarLibrary> {
       child: TabBarView(
         children: [
           Container(
-            child: ListView.builder(
-                itemCount: trainerNames.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return getRowChest(position);
-                }
-                // children: [
-                //   Wrap(
-                //     direction: Axis.horizontal,
-                //     alignment: WrapAlignment.center,
-                //     spacing: 8.0,
-                //     // runAlignment:WrapAlignment.center,
-                //     runSpacing: 8.0,
-                //     // crossAxisAlignment: WrapCrossAlignment.center,
-                //     // textDirection: TextDirection.rtl,
-                //     // verticalDirection: VerticalDirection.up,
-                //     children: <Widget>[
-                //       Container(
-                //           color: Colors.blue,
-                //           width: MediaQuery.of(context).size.width * 0.25,
-                //           height: MediaQuery.of(context).size.width * 0.25,
-                //           child: Center(
-                //               child: Text(
-                //             "W1",
-                //             textScaleFactor: 2.5,
-                //           ))),
-                //     ],
-                //   ),
-                // ],
-                ),
+            child: TrainersExpadedList()
           ),
           Container(
-            child: ListView.builder(
-                itemCount: nutrionistNames.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return getRowBack(position);
-                }),
+            child:
+            NutrionistExpadedList(),
+            // ListView.builder(
+            //     itemCount: nutrionistNames.length,
+            //     itemBuilder: (BuildContext context, int position) {
+            //       return getRowBack(position);
+            //     }),
           ),
-          Container(
-            child: ListView.builder(
-                itemCount: physicalTherapistsNames.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return getRowLegs(position);
-                }),
-          ),
+          PTExpandedList(),
         ],
         controller: widget._tabController,
       ),

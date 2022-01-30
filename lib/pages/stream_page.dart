@@ -4,6 +4,7 @@ import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/widgest/app_bar.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
 import 'package:the_bar_gym/widgest/icons_buttons.dart';
+import 'package:the_bar_gym/widgest/spped_dials/home_page_speeddial.dart';
 
 import '../theme.dart';
 
@@ -30,10 +31,7 @@ class StreamPage extends StatelessWidget {
         leadingWidth: 54,
         leading: Align(
           alignment: Alignment.centerRight,
-          child: IconBackground(
-            icon: CupertinoIcons.camera_circle,
-            onTap: () {},
-          ),
+          child: HomeSpeedDialButton(),
         ),
         actions: [
           Row(

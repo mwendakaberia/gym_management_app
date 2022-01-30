@@ -12,6 +12,10 @@ import 'package:the_bar_gym/utils/helpers.dart';
 import 'package:the_bar_gym/utils/textStyles.dart';
 import 'package:the_bar_gym/utils/units.dart';
 
+
+///TODO: Fix erros with trying to log workout on a day in the past, will only add to present
+/// day ie if i add a wokrout on the 26th but todays date is the 27th it will add that workout tothe current day
+///TODO: Add total volume for sets
 class ExerciseDetail extends StatefulWidget {
   ExerciseDetail({this.exercise, this.isEdit, this.date});
   final Exercise? exercise;
@@ -199,112 +203,119 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
                 icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                 onPressed: () => Navigator.pop(context)),
           ),
-          body: Form(
-            key: formKey,
-            child: ListView(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Exercise Name Text Field
-                      TextFormField(
-                        cursorColor: Colors.white,
-                        controller: nameController,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+          body: GestureDetector( onTap:() {
+            print('Clicked outside');
+            FocusScope.of(context).unfocus();
+          },
+            child: Form(
+              key: formKey,
+              child: ListView(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Exercise Name Text Field
+                        TextFormField(
+                          cursorColor: Colors.white,
+                          controller: nameController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: new OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                              borderSide: BorderSide(color: AppColors.accent),
+                            ),
+                            border: OutlineInputBorder(),
+                            labelText: "Exercise name",
+                            hintText: "Exercise name",
+                            labelStyle: TextStyle(color: Colors.white),
                           ),
-                          focusedBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(25.0),
-                            borderSide: BorderSide(color: AppColors.accent),
+                          validator: (value) {
+                            if (value!.isEmpty)
+                              return 'Please enter the exercise name';
+                            else
+                              return null;
+                          },
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: Text(
+                            "Sets",
+                            style: isThemeDark(context)
+                                ? CardSubTitleStyle.dark
+                                : CardSubTitleStyle.light,
                           ),
-                          border: OutlineInputBorder(),
-                          labelText: "Exercise name",
-                          hintText: "Exercise name",
-                          labelStyle: TextStyle(color: Colors.white),
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty)
-                            return 'Please enter the exercise name';
-                          else
-                            return null;
-                        },
-                      ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
-                        child: Text(
-                          "Sets",
-                          style: isThemeDark(context)
-                              ? CardSubTitleStyle.dark
-                              : CardSubTitleStyle.light,
+                        // build Sets list with their data
+                        buildSetList(setsData, context),
+
+                        // Button to add set
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 30.0),
+                          child: TextButton(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  color: AppColors.accent,
+                                ),
+                                Text(
+                                  " Add Set",
+                                  style: isThemeDark(context)
+                                      ? AddSetButtonStyle.dark
+                                      : AddSetButtonStyle.light,
+                                ),
+                              ],
+                            ),
+                            onPressed: () =>
+                                showSetsInputDialog(context: context),
+                          ),
                         ),
-                      ),
 
-                      // build Sets list with their data
-                      buildSetList(setsData, context),
-
-                      // Button to add set
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30.0),
-                        child: TextButton(
-                          child: Row(
+                        // note textfiled
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                Icons.add,
-                                color: AppColors.accent,
+                              TextField(
+
+                                cursorColor: Colors.white,
+                                controller: noteController,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: new OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(25.0),
+                                    borderSide:
+                                        BorderSide(color: AppColors.accent),
+                                  ),
+                                  border: OutlineInputBorder(),
+                                  labelText: "Notes",
+                                  hintText: "Notes",
+                                  labelStyle: TextStyle(color: Colors.white),
+                                ),
                               ),
-                              Text(
-                                " Add Set",
-                                style: isThemeDark(context)
-                                    ? AddSetButtonStyle.dark
-                                    : AddSetButtonStyle.light,
-                              ),
+
                             ],
                           ),
-                          onPressed: () =>
-                              showSetsInputDialog(context: context),
                         ),
-                      ),
-
-                      // note textfiled
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextField(
-                              cursorColor: Colors.white,
-                              controller: noteController,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                focusedBorder: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(25.0),
-                                  borderSide:
-                                      BorderSide(color: AppColors.accent),
-                                ),
-                                border: OutlineInputBorder(),
-                                labelText: "Notes",
-                                hintText: "Notes",
-                                labelStyle: TextStyle(color: Colors.white),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 

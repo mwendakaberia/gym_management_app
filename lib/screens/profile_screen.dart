@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
 import 'package:the_bar_gym/widgest/widgets.dart';
+
+import '../firebase.dart';
+import '../theme.dart';
+import 'auth_screens/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   static Route get route => MaterialPageRoute(
@@ -29,24 +34,55 @@ class ProfileScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Hero(
+            const Hero(
               tag: 'hero-profile-picture',
-              child: Avatar.large(url: 'user?.image'),
+              child: const Avatar.large(url: 'user?.image'),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('No name'),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: const Text('No name'),
+            ),
+            Container(
+              // decoration: BoxDecoration(image: DecorationImage(image: ) ),
+
+              child: Column(children: [
+
+
+            ],),),
+
+
+            //
+            // Text('Light/Dark Mode'),
+            const Divider(),
+            TextButton(onPressed: (){}, child: const Text('About The Bar'), ),
+            const Divider(),
+            Column(
+              children: [
+                const Text('Want Your Own App or Have Feed Back?'),
+                TextButton(onPressed: (){}, child: const Text('Click Here'),),
+
+              ],
             ),
             const Divider(),
             const _SignOutButton(),
-            const Divider(),
-            Text('Light/Dark Mode'),
+            const _DeleteAccountButton(),
+
           ],
         ),
       ),
     );
   }
 }
+
+class _DeleteAccountButton extends StatelessWidget {
+  const _DeleteAccountButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(onPressed: (){}, child: const Text('Delete Account', style: TextStyle(color: AppColors.accent),));
+  }
+}
+
 
 class _SignOutButton extends StatefulWidget {
   const _SignOutButton({
@@ -82,7 +118,24 @@ class __SignOutButtonState extends State<_SignOutButton> {
     return _loading
         ? const CircularProgressIndicator()
         : TextButton(
-            onPressed: () {},
+            onPressed: () { context.read<FlutterFireAuthService>().signOut();
+            Navigator.pushAndRemoveUntil(
+                context,
+                PageRouteBuilder(pageBuilder: (BuildContext context, Animation animation,
+                    Animation secondaryAnimation) {
+                  return LoginScreen();
+                }, transitionsBuilder: (BuildContext context, Animation<double> animation,
+                    Animation<double> secondaryAnimation, Widget child) {
+                  return new SlideTransition(
+                    position: new Tween<Offset>(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+                }),
+                    (Route route) => false);
+           },
             child: const Text('Sign out'),
           );
   }

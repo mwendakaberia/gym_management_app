@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:the_bar_gym/pages/log_pages/exercise_list.dart';
 import 'package:the_bar_gym/screens/machine_video_screens/machine_video_screens.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/screens/test_1.dart';
@@ -28,6 +29,27 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
     'Incline Press',
     'Iso Lateral Chest Press',
     'Power Press',
+  ];
+  List chestMachineImage = <String>[
+    'images/',
+    'images/',
+    'images/',
+    'images/',
+    'images/',
+  ];
+  List backMachineImage = <String>[
+    'images/',
+    'images/',
+    'images/',
+    'images/',
+    'images/',
+  ];
+  List legMachineImage = <String>[
+    'images/',
+    'images/',
+    'images/',
+    'images/',
+    'images/',
   ];
 
   List chestPages = <dynamic>[
@@ -177,7 +199,12 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
                   iconColor: Colors.white,
                 ),
                 IconsButton(
-                  onPressed: () {},
+                  onPressed: () {  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return ExerciseList();
+                    }),
+                  );},
                   text: 'Log Workout',
                   iconData: CupertinoIcons.square_list,
                   color: AppColors.accent,

@@ -82,7 +82,7 @@ class WelcomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(child: Text('NotificationsPage')),
+      body: Center(child: Text('Notifications Page',)),
     );
   }
 }
