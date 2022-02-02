@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -123,6 +124,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
     if (formKey.currentState!.validate()) {
       //check if atleast one set is present
       if (setsData.isNotEmpty) {
+        print(widget.date.toString());
         final setsDataString = jsonEncode(setsData);
 
         final exercise = isEdit!
