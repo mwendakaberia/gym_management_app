@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:the_bar_gym/screens/auth_screens/register_screen.dart';
 
+import '../../theme.dart';
 import '../home_screen.dart';
 
 
@@ -98,7 +99,7 @@ class _LoginScreenState extends State <LoginScreen> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: AppColors.accent,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -115,53 +116,59 @@ class _LoginScreenState extends State <LoginScreen> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            color: Colors.black,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+            children: [
+              SizedBox(
+                  // height: 200 ,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset("images/bar2.jpg",
+                    fit: BoxFit.contain,)),
+              Container(
+                // color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
 
-                  children: <Widget>[
-                    SizedBox(
-                        height: 200 ,
-                        child: Image.asset("images/logo.png",
-                          fit: BoxFit.contain,)),
-                    SizedBox(height: 45),
+                      children: <Widget>[
 
-                    emailField,
-                    SizedBox(height: 25),
-                    passwordField,
-                    SizedBox(height: 35),
-                    loginButton,
-                    SizedBox(height: 15),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Don't have an account ? "),
-                          GestureDetector(onTap: () {
-                            Navigator.push(context,MaterialPageRoute(
-                                builder: (context) =>
-                                    RegistrationScreen()));
-                          },
-                            child: Text(
-                              "SignUp",
-                              style: TextStyle(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.bold,fontSize: 15),
-                            ),),
-                        ]),
+                        SizedBox(height: 45),
 
-                  ],
+                        emailField,
+                        SizedBox(height: 25),
+                        passwordField,
+                        SizedBox(height: 35),
+                        loginButton,
+                        SizedBox(height: 15),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Don't have an account ? "),
+                              GestureDetector(onTap: () {
+                                Navigator.push(context,MaterialPageRoute(
+                                    builder: (context) =>
+                                        RegistrationScreen()));
+                              },
+                                child: Text(
+                                  "SignUp",
+                                  style: TextStyle(
+                                      color: AppColors.accent,
+                                      fontWeight: FontWeight.bold,fontSize: 15),
+                                ),),
+                            ]),
+
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

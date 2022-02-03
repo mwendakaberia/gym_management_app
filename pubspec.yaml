@@ -70,3 +70,6 @@ flutter:
   assets:
     - assets/images/no_data.png
     - images/
+    - images/chest/
+    - images/back/
+    - images/legs/

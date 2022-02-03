@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
+import 'package:the_bar_gym/lists/list.dart';
 import 'package:the_bar_gym/pages/log_pages/exercise_list.dart';
 import 'package:the_bar_gym/screens/machine_video_screens/machine_video_screens.dart';
 import 'package:the_bar_gym/screens/screens.dart';
@@ -23,80 +24,7 @@ class TabBarLibrary extends StatefulWidget {
 }
 
 class _TabBarLibraryState extends State<TabBarLibrary> {
-  List chestTitles = <String>[
-    'Flat Bench Press',
-    'Peck Deck',
-    'Incline Press',
-    'Iso Lateral Chest Press',
-    'Power Press',
-  ];
-  List chestMachineImage = <String>[
-    'images/',
-    'images/',
-    'images/',
-    'images/',
-    'images/',
-  ];
-  List backMachineImage = <String>[
-    'images/',
-    'images/',
-    'images/',
-    'images/',
-    'images/',
-  ];
-  List legMachineImage = <String>[
-    'images/',
-    'images/',
-    'images/',
-    'images/',
-    'images/',
-  ];
 
-  List chestPages = <dynamic>[
-    FlatBenchPressVideoPage(),
-    InclinePressVideoPage(),
-    IsoLateralChestPressVideoPage(),
-    PeckDeckVideoPage(),
-    PowerPressVideoPage(),
-  ];
-  List backPages = <dynamic>[
-    ChestSupportRowPage(),
-    IsoLatDYRowPage(),
-    IsoLatLowRowPage(),
-  ];
-  List legPages = <dynamic>[
-    BeltSquatVideoPage(),
-    CalfMachineVideoPage(),
-    GluteatorVideoPage(),
-    HackSquatVideoPage(),
-    InverseCurlVideoPage(),
-    LegExtensionVideoPage(),
-    LegPressVideoPage(),
-    LyingLegCurlVideoPage(),
-    SeatedLegCurlVideoPage(),
-    StandingLegCurlVideoPage(),
-    SuperSquatVideoPage(),
-  ];
-  List backTitles = <String>[
-    'Iso Lat Low Row',
-    'Chest Supported Row',
-    'Iso Lat DY Row',
-  ];
-  List legsTitles = <String>[
-    'Inverse Curl',
-    'Gluteator',
-    'Super Squat',
-    'Standing Leg Curl',
-    'Leg Extension',
-    'Lying Leg Curl',
-    'Leg Extension',
-    'Lying leg Curl',
-    'Seated Leg Curl',
-    'Calf Machine',
-    'Hack Squat',
-    'Leg Press',
-    'Belt Squat',
-  ];
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -162,11 +90,32 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
           elevation: 10,
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
             ListTile(
-              contentPadding: EdgeInsets.all(10.0),
-              leading: Icon(
-                Icons.accessibility_new,
-                size: 70,
-                color: Colors.red[900],
+
+              contentPadding: EdgeInsets.all(4.0),
+              leading: Container(clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+
+                    color: Colors.white,
+                    boxShadow: [BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(0.0, 0.0),
+                      blurRadius: 4.0,
+                      blurStyle: BlurStyle.outer,
+                    )],
+                    border: Border.all(
+                      color: Colors.white12,
+
+
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(8),
+                    )
+                ),
+                child: Image.asset(chestMachineImage[i],
+                  fit: BoxFit.contain,
+
+                  width: 80,
+                  height:80,
+                  ),
               ),
               title: Text(
                 chestTitles[i],
@@ -225,10 +174,28 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
             ListTile(
               contentPadding: EdgeInsets.all(10.0),
-              leading: Icon(
-                Icons.accessibility_new,
-                size: 70,
-                color: Colors.red[900],
+              leading: Container(clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+
+                    color: Colors.white,
+                    boxShadow: [BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(0.0, 0.0),
+                      blurRadius: 12.0,
+                      blurStyle: BlurStyle.outer,
+                    )],
+                    border: Border.all(
+                      color: Colors.white12,
+
+
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+                child: Image.asset(backMachineImage[i],
+                  fit: BoxFit.contain,
+
+                  width: 80,
+                  height:80,),
               ),
               title: Text(
                 backTitles[i],
@@ -282,10 +249,28 @@ class _TabBarLibraryState extends State<TabBarLibrary> {
           child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
             ListTile(
               contentPadding: EdgeInsets.all(10.0),
-              leading: Icon(
-                Icons.accessibility_new,
-                size: 70,
-                color: Colors.red[900],
+              leading: Container(clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+
+                  color: Colors.white,
+                  boxShadow: [BoxShadow(
+                    color: Colors.white,
+                    offset: Offset(0.0, 0.0),
+                    blurRadius: 12.0,
+                    blurStyle: BlurStyle.outer,
+                  )],
+                  border: Border.all(
+                    color: Colors.white12,
+
+
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+                child: Image.asset(legMachineImage[i],
+                  fit: BoxFit.contain,
+
+                  width: 80,
+                  height:80,),
               ),
               title: Text(
                 legsTitles[i],

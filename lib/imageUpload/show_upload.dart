@@ -38,6 +38,7 @@ class _ShowUploadsState extends State<ShowUploads> {
                     child: ListView.builder(
                       shrinkWrap: true,
 
+
                        scrollDirection: Axis.horizontal,
 
                       itemCount: snapshot.data!.docs.length,

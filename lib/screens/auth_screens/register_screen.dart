@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:the_bar_gym/models/user_model.dart';
 
+import '../../theme.dart';
 import '../home_screen.dart';
 
 
@@ -169,7 +170,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: AppColors.accent,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -185,7 +186,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -197,41 +198,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
       body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            color: Colors.black,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formkey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                        height: 180,
-                        child: Image.asset("images/logo.png",
-                          fit: BoxFit.contain,
-                        )),
-                    SizedBox(height: 45),
-                    firstNameField,
-                    SizedBox(height: 20),
-                    secondNameField,
-                    SizedBox(height: 20),
-                    emailField,
-                    SizedBox(height: 20),
-                    passwordField,
-                    SizedBox(height: 20),
-                    confirmPasswordField,
-                    SizedBox(height: 20),
-                    signUpButton,
-                    SizedBox(height: 15),
+        child: Column(
+          children: [
+            SizedBox(height: 35),
+            SizedBox(
+                // height: 200,
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset("images/bar2.jpg",
+                  fit: BoxFit.contain,)),
+            SingleChildScrollView(
+              child: Container(
+                // color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    key: _formkey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
 
-                  ],
+
+                        firstNameField,
+                        SizedBox(height: 20),
+                        secondNameField,
+                        SizedBox(height: 20),
+                        emailField,
+                        SizedBox(height: 20),
+                        passwordField,
+                        SizedBox(height: 20),
+                        confirmPasswordField,
+                        SizedBox(height: 20),
+                        signUpButton,
+                        SizedBox(height: 15),
+
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
