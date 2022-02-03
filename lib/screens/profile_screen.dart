@@ -67,7 +67,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
            Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text("${loggedInUser.userName}"),
+              child: Text("${loggedInUser.userName}",
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 30,
+              ),),
             ),
             Container(
               // decoration: BoxDecoration(image: DecorationImage(image: ) ),
