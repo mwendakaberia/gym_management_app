@@ -60,7 +60,8 @@ class _SelfieScreenState extends State<SelfieScreen> {
                 height: 10,
               ),
               Text(
-                  "${loggedInUser.firstName}${loggedInUser.secondName}",
+                  "${loggedInUser.userName}",
+                      // "${loggedInUser.secondName}",
                   style: TextStyle(fontSize: 20,
                       color: Colors.black54,
                       fontWeight: FontWeight.w500
@@ -108,7 +109,7 @@ class _SelfieScreenState extends State<SelfieScreen> {
     final appBarHeight = AppBar().preferredSize.height;
     return PreferredSize(
         child: AppBar (
-          title : const Text("Profile"),
+          title : Text("${loggedInUser.userName}"),
           actions: [
             IconButton(
               onPressed: () {

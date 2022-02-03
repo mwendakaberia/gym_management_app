@@ -24,8 +24,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formkey = GlobalKey<FormState>();
 
   //editing Controller
-  final firstNameEditingController = new TextEditingController();
-  final secondNameEditingController = new TextEditingController();
+  final userNameEditingController = new TextEditingController();
+  final fullNameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
@@ -33,9 +33,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     //first name  field
-    final firstNameField = TextFormField(
+    final userNameField = TextFormField(
         autofocus: false,
-        controller: firstNameEditingController,
+        controller: userNameEditingController,
         keyboardType: TextInputType.name,
         validator: (value){
           RegExp regex = new RegExp(r'^.{3,}$');
@@ -50,36 +50,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return null;
         },
         onSaved: (value) {
-          firstNameEditingController.text = value!;
+          userNameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "First Name",
+          hintText: "User Name",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10)
           ),
         ));
     //second name  field
-    final secondNameField = TextFormField(
+    final fullNameField = TextFormField(
         autofocus: false,
-        controller: secondNameEditingController,
+        controller: fullNameEditingController,
         keyboardType: TextInputType.name,
         validator: (value){
           if (value!.isEmpty)
           {
-            return ("Second Name Can't be Empty ");
+            return ("Full Name Can't be Empty ");
           }
         },
         onSaved: (value) {
-          secondNameEditingController.text = value!;
+          userNameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Second Name",
+          hintText: "Full Name",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10)
           ),
@@ -219,9 +219,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       children: <Widget>[
 
 
-                        firstNameField,
+                        userNameField,
                         SizedBox(height: 20),
-                        secondNameField,
+                        fullNameField,
                         SizedBox(height: 20),
                         emailField,
                         SizedBox(height: 20),
@@ -270,8 +270,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //writing all the values
     userModel.email = user!.email;
     userModel.uid = user.uid;
-    userModel.firstName = firstNameEditingController.text;
-    userModel.secondName = secondNameEditingController.text;
+    userModel.userName = userNameEditingController.text;
+    userModel.fullName = fullNameEditingController.text;
 
     await firebaseFirestore
         .collection("users")

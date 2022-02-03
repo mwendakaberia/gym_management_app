@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
+import 'package:the_bar_gym/models/user_model.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
 import 'package:the_bar_gym/widgest/widgets.dart';
 
@@ -8,11 +11,35 @@ import '../firebase.dart';
 import '../theme.dart';
 import 'auth_screens/login_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static Route get route => MaterialPageRoute(
         builder: (context) => const ProfileScreen(),
       );
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value){
+      this.loggedInUser = UserModel.formMap(value.data());
+      setState(() {
+
+      });
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +65,9 @@ class ProfileScreen extends StatelessWidget {
               tag: 'hero-profile-picture',
               child: const Avatar.large(url: 'user?.image'),
             ),
-            const Padding(
+           Padding(
               padding: EdgeInsets.all(8.0),
-              child: const Text('No name'),
+              child: Text("${loggedInUser.userName}"),
             ),
             Container(
               // decoration: BoxDecoration(image: DecorationImage(image: ) ),

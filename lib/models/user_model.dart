@@ -1,10 +1,10 @@
 class UserModel{
   String? uid;
   String? email;
-  String? firstName;
-  String? secondName;
+  String? userName;
+  String? fullName;
 
-  UserModel({this.uid, this.email , this.firstName , this.secondName});
+  UserModel({this.uid, this.email , this.userName , this.fullName});
 
   //receiving data from server
 
@@ -12,8 +12,8 @@ class UserModel{
     return UserModel(
       uid: map['uid'],
       email: map['email'],
-      firstName: map['firstName'],
-      secondName: map['secondName'],
+      userName: map['userName'],
+      fullName: map['fullName'],
 
     );
   }
@@ -24,8 +24,8 @@ class UserModel{
     return {
       'uid' : uid ,
       'email' : email,
-      'firstName' : firstName ,
-      'secondName' : secondName ,
+      'userName' : userName ,
+      'fullName' : fullName ,
     };
   }
 }
