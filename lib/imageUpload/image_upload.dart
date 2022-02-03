@@ -108,7 +108,7 @@ class _ImageUploadState extends State<ImageUpload> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: SizedBox(
-              height: 550,
+              height: MediaQuery.of(context).size.height * 0.8,
               width: double.infinity,
               child: Column(
                 children: [
@@ -116,9 +116,11 @@ class _ImageUploadState extends State<ImageUpload> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(flex:4,
+                  Expanded(
+
                       child: Container(
-                        width: 320,
+                        width: MediaQuery.of(context).size.width * 0.9,
+
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.red)),
@@ -130,20 +132,30 @@ class _ImageUploadState extends State<ImageUpload> {
                                 child: _image == null
                                 ?const Center(child: Text("No Image Selected"))
                                 :
-                                Image.file(_image!),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.file(_image!),
+                                ),
                               ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ElevatedButton(
-                                      onPressed: (){
-                                    imagePickerMethod();
-                                  },
-                                      child: Text("Select Image")),
-                                  ElevatedButton(
-                                      onPressed: (){
-                                        cameraPickerMethod();
-                                      },
-                                      child: Text("Select Image")),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                        onPressed: (){
+                                      imagePickerMethod();
+                                    },
+                                        child: Text("Select Image")),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                        onPressed: (){
+                                          cameraPickerMethod();
+                                        },
+                                        child: Text("Take Picture")),
+                                  ),
                                 ],
                               ),
                               ElevatedButton(onPressed: () {

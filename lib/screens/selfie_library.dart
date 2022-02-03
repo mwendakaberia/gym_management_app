@@ -53,31 +53,31 @@ class _SelfieScreenState extends State<SelfieScreen> {
                 child: Image.asset("images/logo.png",fit: BoxFit.contain),
               ),
               Text(
-                "Welcome Back",
+                "Securely Stored Progress Pictures",
                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                  "${loggedInUser.userName}",
-                      // "${loggedInUser.secondName}",
-                  style: TextStyle(fontSize: 20,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w500
-                  )),
-              Text(
-                  "${loggedInUser.email}",
-                  style: TextStyle(fontSize: 20,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w500
-                  )),
-              Text(
-                  "${loggedInUser.uid}",
-                  style: TextStyle(fontSize: 20,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w500
-                  )),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Text(
+              //     "${loggedInUser.userName}",
+              //         // "${loggedInUser.secondName}",
+              //     style: TextStyle(fontSize: 20,
+              //         color: Colors.black54,
+              //         fontWeight: FontWeight.w500
+              //     )),
+              // Text(
+              //     "${loggedInUser.email}",
+              //     style: TextStyle(fontSize: 20,
+              //         color: Colors.black54,
+              //         fontWeight: FontWeight.w500
+              //     )),
+              // Text(
+              //     "${loggedInUser.uid}",
+              //     style: TextStyle(fontSize: 20,
+              //         color: Colors.black54,
+              //         fontWeight: FontWeight.w500
+              //     )),
               SizedBox(
                 height: 15,
               ),
@@ -85,11 +85,11 @@ class _SelfieScreenState extends State<SelfieScreen> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ImageUpload( userId: loggedInUser.uid)));
               }  ,
-                  child: Text("Upload Images")),
+                  child: Text("Select a Picture")),
               ElevatedButton(onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ShowUploads( userId: loggedInUser.uid)));
-              }  , child: Text("Show Images ")),
+              }  , child: Text("Progress gallery")),
             ],
           ),
         ),
