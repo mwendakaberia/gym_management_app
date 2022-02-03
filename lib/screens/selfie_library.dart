@@ -111,11 +111,11 @@ class _SelfieScreenState extends State<SelfieScreen> {
         child: AppBar (
           title : Text("${loggedInUser.userName}"),
           actions: [
-            IconButton(
-              onPressed: () {
-                logout(context);
-              },
-              icon: Icon(Icons.logout),)
+            // IconButton(
+            //   onPressed: () {
+            //     logout(context);
+            //   },
+            //   icon: Icon(Icons.logout),)
           ],),
         preferredSize: Size.fromHeight(appBarHeight));
   }
