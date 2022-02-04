@@ -59,7 +59,9 @@ class _PowerLiftingChatPageState extends State<PowerLiftingChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('Power Lifting'),
+        ),
         body: Center(
             child: Column(children: [
               StreamBuilder<QuerySnapshot>(
@@ -122,6 +124,7 @@ class _PowerLiftingChatPageState extends State<PowerLiftingChatPage> {
                         decoration: kMessageTextFieldDecoration,
                       ),
                     ),
+
                     TextButton(
                       onPressed: () {
 
@@ -140,7 +143,9 @@ class _PowerLiftingChatPageState extends State<PowerLiftingChatPage> {
                     ),
                   ],
                 ),
+
               ),
+              SizedBox(height: 32,)
             ],)
         ));
   }
