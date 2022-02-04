@@ -12,13 +12,14 @@ import 'package:the_bar_gym/utils/theme.dart';
 import 'package:the_bar_gym/utils/units.dart';
 
 import 'firebase.dart';
+import 'firebase_options.dart';
 
 
 ///todo
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   Provider.debugCheckInvalidValueType = null;
   runApp(

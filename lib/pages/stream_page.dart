@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:the_bar_gym/models/user_model.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/widgest/app_bar.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
@@ -9,10 +12,28 @@ import 'package:the_bar_gym/widgest/spped_dials/home_page_speeddial.dart';
 import '../theme.dart';
 
 class StreamPage extends StatelessWidget {
-  const StreamPage({Key? key}) : super(key: key);
+  StreamPage({Key? key}) : super(key: key);
+  String? userId;
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+  @override
+  void initState() {
 
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value){
+      this.loggedInUser = UserModel.formMap(value.data());
+
+    });
+    // var userPic = loggedInUser.picURL;
+
+  }
   @override
   Widget build(BuildContext context) {
+    print(loggedInUser.userName);
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -85,7 +106,81 @@ class StreamPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(child: Text('Stream Messages')),
+      body: ChatSelecitonPage(),
     );
+  }
+}
+
+class ChatSelecitonPage extends StatelessWidget {
+  ChatSelecitonPage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: ListView(
+      padding: const EdgeInsets.all(8),
+      children: <Widget>[
+        chatSelectTile(chatTitle: 'Power Lifting'),
+        chatSelectTile(chatTitle: 'Body Building'),
+        chatSelectTile(chatTitle: 'Strong Man'),
+        chatSelectTile(chatTitle: 'Group Fitness'),
+
+
+      ],
+    ));
+  }
+}
+
+class chatSelectTile extends StatelessWidget {
+  const chatSelectTile({
+    Key? key,
+    required this.chatTitle,
+  }) : super(key: key);
+
+  final String chatTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: CircleAvatar(radius: 45,),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.all(Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+                  child: Text(chatTitle),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          // child: Text(
+          //   Jiffy(message.createdAt.toLocal()).jm,
+          //   style: const TextStyle(
+          //     color: AppColors.textFaded,
+          //     fontSize: 10,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+        )
+    ],);
   }
 }

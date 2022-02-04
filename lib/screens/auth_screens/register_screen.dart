@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dice_bear/dice_bear.dart';
 
 import 'package:the_bar_gym/models/user_model.dart';
-
 import '../../theme.dart';
 import '../home_screen.dart';
 
@@ -19,6 +19,8 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  Avatar _avatar = DiceBearBuilder.withRandomSeed().build();
+
   final _auth = FirebaseAuth.instance;
   //our form key
   final _formkey = GlobalKey<FormState>();
@@ -32,6 +34,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Uri uri = _avatar.svgUri;
     //first name  field
     final userNameField = TextFormField(
         autofocus: false,
@@ -272,6 +275,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.uid = user.uid;
     userModel.userName = userNameEditingController.text;
     userModel.fullName = fullNameEditingController.text;
+    userModel.picURL = '${_avatar.svgUri}';
 
     await firebaseFirestore
         .collection("users")

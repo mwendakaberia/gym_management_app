@@ -1,10 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dice_bear/dice_bear.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'package:the_bar_gym/models/user_model.dart';
 import 'package:the_bar_gym/widgest/avatars.dart';
+
 import 'package:the_bar_gym/widgest/widgets.dart';
 
 import '../firebase.dart';
@@ -12,10 +15,13 @@ import '../theme.dart';
 import 'auth_screens/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
+  String? userId;
+
+
   static Route get route => MaterialPageRoute(
-        builder: (context) => const ProfileScreen(),
+        builder: (context) =>  ProfileScreen(),
       );
-  const ProfileScreen({Key? key}) : super(key: key);
+ ProfileScreen({Key? key, this.userId}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -25,9 +31,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
+
   @override
   void initState() {
     super.initState();
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)
@@ -38,11 +46,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       });
     });
+    // var userPic = loggedInUser.picURL;
 
   }
 
   @override
   Widget build(BuildContext context) {
+    var userPic = loggedInUser.picURL;
+    print(loggedInUser.picURL);
+    // Avatar _avatar = DiceBearBuilder(
+    //   seed: '${loggedInUser.uid}',               // Default seed is an empty string if you don't set it
+    // ).build();
     // final user = context.currentUser;
     return Scaffold(
       appBar: AppBar(
@@ -61,10 +75,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Center(
         child: Column(
           children: [
-            const Hero(
-              tag: 'hero-profile-picture',
-              child: const Avatar.large(url: 'user?.image'),
-            ),
+// StreamBuilder(
+//     stream: FirebaseFirestore.instance.collection('collection').snapshots(), ,
+//     builder: (context, snapshot) {
+//       if(!snapshot.hasData) {
+//         return CircleAvatar();
+//     } else {
+//         <DocumentSnapshot> users = snapshot.data.documents;
+//     }
+//
+//             };
+
+
+
+
+
            Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("${loggedInUser.userName}",
