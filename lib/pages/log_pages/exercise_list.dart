@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:the_bar_gym/db/moor_db.dart';
+import 'package:the_bar_gym/models/exercise.dart';
 import 'package:the_bar_gym/pages/log_pages/exercise_details.dart';
 import 'package:the_bar_gym/pages/log_pages/settings.dart';
+import 'package:the_bar_gym/provider/exercise_detail_provider.dart';
 import 'package:the_bar_gym/screens/screens.dart';
 import 'package:the_bar_gym/theme.dart';
 import 'package:the_bar_gym/utils/colors.dart';
 import 'package:the_bar_gym/utils/date_picker.dart';
-import 'package:the_bar_gym/utils/helpers.dart';
 import 'package:the_bar_gym/utils/textStyles.dart';
 import 'package:the_bar_gym/widgest/log_widgets/empty_page.dart';
 import 'package:the_bar_gym/widgest/log_widgets/exercise_card.dart';
@@ -35,6 +35,7 @@ class _ExerciseListState extends State<ExerciseList> {
 
   @override
   Widget build(BuildContext context) {
+    print("date --- ${date.toString()}");
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -133,17 +134,15 @@ class _ExerciseListState extends State<ExerciseList> {
 
 //Build Exercise list
   StreamBuilder<List<Exercise>> buildExerciseList(BuildContext context) {
-    final database = Provider.of<AppDatabase>(context);
-
     return StreamBuilder(
-      stream: database.watchExerciseWithDate(date: date),
+      stream: context.watch<ExerciseDetailProvider>().getAllData(date),
       builder: (context, AsyncSnapshot<List<Exercise>> snapshot) {
-        final exercises = snapshot.data;
+        final List<Exercise> exercises = snapshot.data!;
         if (snapshot.hasData) {
           if (snapshot.data!.isNotEmpty) {
             return ListView.builder(
               padding: EdgeInsets.all(6.0),
-              itemCount: exercises!.length,
+              itemCount: exercises.length,
               itemBuilder: (_, index) {
                 final exercise = exercises[index];
                 return ExerciseCard(

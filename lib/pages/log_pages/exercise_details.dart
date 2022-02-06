@@ -1,11 +1,10 @@
-import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-import 'package:the_bar_gym/db/moor_db.dart';
 import 'package:the_bar_gym/models/data_model.dart';
+import 'package:the_bar_gym/models/exercise.dart';
+import 'package:the_bar_gym/provider/exercise_detail_provider.dart';
 import 'package:the_bar_gym/theme.dart';
 import 'package:the_bar_gym/utils/colors.dart';
 import 'package:the_bar_gym/utils/enums.dart';
@@ -13,14 +12,13 @@ import 'package:the_bar_gym/utils/helpers.dart';
 import 'package:the_bar_gym/utils/textStyles.dart';
 import 'package:the_bar_gym/utils/units.dart';
 
-
 ///TODO: Fix erros with trying to log workout on a day in the past, will only add to present
 /// day ie if i add a wokrout on the 26th but todays date is the 27th it will add that workout tothe current day
 ///TODO: Add total volume for sets
 class ExerciseDetail extends StatefulWidget {
-  ExerciseDetail({this.exercise, this.isEdit, this.date});
+  const ExerciseDetail({this.exercise, required this.isEdit, this.date});
   final Exercise? exercise;
-  final bool? isEdit;
+  final bool isEdit;
   final DateTime? date;
 
   @override
@@ -40,7 +38,6 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
 
   //temporarily Store the Data of the Sets
   List<Data> setsData = [];
-  // Weight weight = Weight(kg: 0, lbs: 0)
 
   //Add Set Data to the SetsData list
   void addSet(BuildContext context) {
@@ -94,6 +91,13 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
     }
   }
 
+  void _clearController() {
+    nameController.clear();
+    weightController.clear();
+    repsController.clear();
+    noteController.clear();
+  }
+
   void deleteSet(int index) {
     setState(() {
       setsData.removeAt(index);
@@ -103,58 +107,61 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
   //This method sets all the field to their value when on editing screen
   // fields are empty when user crates new exercicse
   void setAllTheInputs() {
-    nameController.text = widget.exercise!.name!;
+    nameController.text = widget.exercise!.name;
     noteController.text = widget.exercise!.note!;
-    List dataDecoded = json.decode(widget.exercise!.data!);
+    //List dataDecoded = json.decode(widget.exercise!.data!);
+    List<Data> dataDecoded = widget.exercise!.data;
     for (var i = 0; i < dataDecoded.length; i++) {
       var exData = dataDecoded[i];
       Data data = Data(
-        reps: exData['reps'],
+        reps: exData.reps,
         weight: Weight(
-          kg: exData['weight']['kg'],
-          lbs: exData['weight']['lbs'],
+          kg: exData.weight!.kg,
+          lbs: exData.weight!.lbs,
         ),
       );
       setsData.add(data);
     }
   }
 
-//save exercise
-  void saveExercise(bool? isEdit) {
+  void addExercise(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      //check if atleast one set is present
-      if (setsData.isNotEmpty) {
-        print(widget.date.toString());
-        final setsDataString = jsonEncode(setsData);
+      if (setsData.isNotEmpty){
+        final Exercise exercise = Exercise(
+          name: nameController.text.toString(), 
+          sets: setsData.length, 
+          data: setsData, 
+          note: noteController.text.toString(), 
+          date: widget.date!, 
+        );
 
-        final exercise = isEdit!
-            ? widget.exercise!.copyWith(
-                name: nameController.text,
-                sets: setsData.length,
-                data: setsDataString,
-                note: noteController.text,
-              )
-            : Exercise(
-                id: null,
-                name: nameController.text,
-                sets: setsData.length,
-                date: widget.date,
-                note: noteController.text,
-                data: setsDataString,
-              );
-
-        //Create instance of database
-        final database = Provider.of<AppDatabase>(context, listen: false);
-
-        //update Exercise Data to Database
-        isEdit
-            ? database.updateExercise(exercise)
-            : database.insertExercise(exercise);
-        Navigator.pop(context);
-      } else {
-        //show snackbar if set is empty
-        snackBar(context, content: 'Please enter atleast one set!');
+        context.read<ExerciseDetailProvider>().addExcerciseData(exercise);
       }
+      Navigator.pop(context);
+    }else {
+      //show snackbar if set is empty
+      snackBar(context, content: 'Please enter atleast one set!');
+    }
+  }
+
+  void updateExercise(BuildContext context) {
+    if (formKey.currentState!.validate()) {
+      if (setsData.isNotEmpty){
+        final Exercise exercise = Exercise(
+          name: nameController.text.toString(), 
+          sets: setsData.length, 
+          data: setsData, 
+          note: noteController.text.toString(), 
+          date: DateTime.now(),//widget.date!, 
+          totalSets: widget.exercise!.totalSets,
+        );
+
+        context.read<ExerciseDetailProvider>().updateExercise(exercise,setsData);
+      }
+      Navigator.pop(context);
+    }else {
+      //show snackbar if set is empty
+      snackBar(context, content: 'Please enter atleast one set!');
     }
   }
 
@@ -164,6 +171,15 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
       setAllTheInputs();
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    weightController.dispose();
+    repsController.dispose();
+    noteController.dispose();
+    super.dispose();
   }
 
   @override
@@ -205,10 +221,11 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
                 icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                 onPressed: () => Navigator.pop(context)),
           ),
-          body: GestureDetector( onTap:() {
-            print('Clicked outside');
-            FocusScope.of(context).unfocus();
-          },
+          body: GestureDetector(
+            onTap: () {
+              print('Clicked outside');
+              FocusScope.of(context).unfocus();
+            },
             child: Form(
               key: formKey,
               child: ListView(
@@ -289,7 +306,6 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TextField(
-
                                 cursorColor: Colors.white,
                                 controller: noteController,
                                 keyboardType: TextInputType.multiline,
@@ -299,7 +315,8 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
                                   focusedBorder: new OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(25.0),
+                                    borderRadius:
+                                        new BorderRadius.circular(25.0),
                                     borderSide:
                                         BorderSide(color: AppColors.accent),
                                   ),
@@ -309,7 +326,6 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
                                   labelStyle: TextStyle(color: Colors.white),
                                 ),
                               ),
-
                             ],
                           ),
                         ),
@@ -324,7 +340,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
           // Floating action Button
           //chnage fab according to the screen user on, edit or create.
           floatingActionButton:
-              widget.isEdit! ? editExerciseButton() : createNewExerciseButton(),
+              widget.isEdit ? editExerciseButton(context) : createNewExerciseButton(context),
         ),
       ),
       onWillPop: onWillPop, //as Future<bool> Function()?,
@@ -334,7 +350,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
   Future<bool> onWillPop() async {
     if (nameController.text.isNotEmpty || setsData.isNotEmpty) {
       print('in here hi');
-      saveExercise(widget.isEdit);
+      //saveExercise(widget.isEdit);
     } else {
       Navigator.pop(context);
     }
@@ -370,15 +386,12 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
                       : DialogActionPositive.light,
                 ),
                 onPressed: () {
-                  setState(() {
-                    Navigator.pop(context);
-                  });
-                  final database =
-                      Provider.of<AppDatabase>(context, listen: false);
+                  context.read<ExerciseDetailProvider>().deleteExercise();
+                  Navigator.pop(context);
 
-                  database.deleteExercise(widget.exercise!);
-                  // Navigator.pop(context);
-                  // Navigator.pop(context);
+                  // setState(() {
+                  //   Navigator.pop(context);
+                  // });
                 },
               )
             ],
@@ -387,7 +400,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
   }
 
 //SpeedDial Floating action button
-  SpeedDial editExerciseButton() {
+  SpeedDial editExerciseButton(BuildContext context) {
     return SpeedDial(
       overlayColor: isThemeDark(context) ? MyColors.black : MyColors.white,
       animatedIcon: AnimatedIcons.menu_close,
@@ -404,7 +417,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
           label: 'Save',
           labelBackgroundColor:
               isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
-          onTap: () => saveExercise(widget.isEdit),
+          onTap: () => updateExercise(context),//saveExercise(widget.isEdit),
         ),
         SpeedDialChild(
           child: Icon(Icons.delete_rounded),
@@ -413,16 +426,14 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
           label: 'Delete',
           labelBackgroundColor:
               isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
-          onTap: () {
-            confirmDelete();
-          },
+          onTap:confirmDelete,
         ),
       ],
     );
   }
 
 //Normal Floating action button
-  FloatingActionButton createNewExerciseButton() {
+  FloatingActionButton createNewExerciseButton(BuildContext context) {
     return FloatingActionButton(
       heroTag: 'fab',
       elevation: 3.0,
@@ -431,7 +442,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
         Icons.done_rounded,
         color: MyColors.black,
       ),
-      onPressed: () => saveExercise(widget.isEdit),
+      onPressed: () => addExercise(context),//saveExercise(widget.isEdit),
     );
   }
 

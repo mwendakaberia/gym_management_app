@@ -1,11 +1,12 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_bar_gym/db/moor_db.dart';
+import 'package:the_bar_gym/pages/log_pages/exercise_list.dart';
+import 'package:the_bar_gym/provider/exercise_detail_provider.dart';
 import 'package:the_bar_gym/screens/auth_screens/welcome_screen.dart';
-
+import 'package:the_bar_gym/services/firestore_service.dart';
 
 import 'package:the_bar_gym/theme.dart';
 import 'package:the_bar_gym/utils/theme.dart';
@@ -13,7 +14,6 @@ import 'package:the_bar_gym/utils/units.dart';
 
 import 'firebase.dart';
 import 'firebase_options.dart';
-
 
 ///todo
 void main() async {
@@ -30,7 +30,7 @@ void main() async {
         ),
         StreamProvider(
           create: (context) =>
-          context.read<FlutterFireAuthService>().authStateChanges,
+              context.read<FlutterFireAuthService>().authStateChanges,
           initialData: null,
         ),
         // Provider<AuthenticationService>(create: (_) => AuthenticationService()),
@@ -40,15 +40,18 @@ void main() async {
         //   initialData: null,
         // ),
 
-        Provider(
-          create: (_) => AppDatabase(),
-        ),
+        // Provider(
+        //   create: (_) => AppDatabase(),
+        // ),
         ChangeNotifierProvider(
           create: (_) => ThemeNotifier(),
         ),
         ChangeNotifierProvider(
           create: (_) => UnitsNotifier(),
         ),
+        Provider(create: (_) => FirestoreService()),
+        Provider(create: (_) => ExerciseDetailProvider()),
+        Provider(create: (_) => FirestoreService()),
       ],
       child: MyApp(
         appTheme: AppTheme(),

@@ -1,8 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_bar_gym/db/moor_db.dart';
+import 'package:the_bar_gym/models/data_model.dart';
+import 'package:the_bar_gym/models/exercise.dart';
 import 'package:the_bar_gym/utils/colors.dart';
 import 'package:the_bar_gym/utils/enums.dart';
 import 'package:the_bar_gym/utils/helpers.dart';
@@ -95,13 +95,13 @@ class ExerciseCard extends StatelessWidget {
   }
 
   int getIntNumber() {
-    int length = json.decode(exercise!.data!).length;
-    return length;
+    //int length = json.decode(exercise!.data!).length;
+    return exercise!.data.length;
   }
 
 //return the number of sets
   String getSetsNumber() {
-    int length = json.decode(exercise!.data!).length;
+    int length = exercise!.data.length;//json.decode(exercise!.data).length;
     return length < 2
         ? (length.toString() + " Set")
         : (length.toString() + " Sets");
@@ -109,7 +109,7 @@ class ExerciseCard extends StatelessWidget {
 
 //build data
   Widget buildDataList(Exercise exercise, BuildContext context) {
-    List dataDecoded = json.decode(exercise.data!);
+    List<Data> dataDecoded = exercise.data;//json.decode(exercise.data!);
 
     return Column(
       children: [
@@ -120,8 +120,8 @@ class ExerciseCard extends StatelessWidget {
               Text(
                   Provider.of<UnitsNotifier>(context).weightUnit ==
                           WeightUnit.kg
-                      ? '${dataDecoded[i]['weight']['kg']}'
-                      : '${dataDecoded[i]['weight']['lbs']}',
+                      ? '${dataDecoded[i].weight!.kg}'
+                      : '${dataDecoded[i].weight!.lbs}',
                   style: CardSubTitleStyle.dark),
               Text(
                   Provider.of<UnitsNotifier>(context).weightUnit ==
@@ -130,7 +130,7 @@ class ExerciseCard extends StatelessWidget {
                       : ' Lbs', //" Kg",
                   style: CardSubTitleStyle.dark),
               Text(" for ", style: CardSubTitleStyle.dark),
-              Text('${dataDecoded[i]['reps']}', style: CardSubTitleStyle.dark),
+              Text('${dataDecoded[i].reps}', style: CardSubTitleStyle.dark),
               Text(" Reps", style: CardSubTitleStyle.dark),
             ],
           ),
