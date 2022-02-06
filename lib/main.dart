@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_bar_gym/db/moor_db.dart';
-import 'package:the_bar_gym/pages/log_pages/exercise_list.dart';
 import 'package:the_bar_gym/provider/exercise_detail_provider.dart';
+import 'package:the_bar_gym/screens/auth_screens/root.dart';
 import 'package:the_bar_gym/screens/auth_screens/welcome_screen.dart';
 import 'package:the_bar_gym/services/firestore_service.dart';
 
@@ -71,7 +70,7 @@ class MyApp extends StatelessWidget {
       theme: appTheme.light,
       darkTheme: appTheme.dark,
       themeMode: ThemeMode.dark,
-      home: WelcomeScreen(),
+      home: RootScreen(),
     );
   }
 }
