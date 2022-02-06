@@ -45,7 +45,7 @@ class ExerciseCard extends StatelessWidget {
                       width: MediaQuery.of(context).size.width *
                           0.80, // 80% width if display
                       child: Text(
-                        exercise!.name!,
+                        exercise!.name,
                         // overflow: TextOverflow.ellipsis,
                         style: isThemeDark(context)
                             ? CardTitleStyle.dark
@@ -63,7 +63,9 @@ class ExerciseCard extends StatelessWidget {
                   children: [
                     Text(
                       getSetsNumber(), //returns the number of sets
-                      style: CardSubTitleStyle.dark,
+                      style: CardSubTitleStyle.dark.copyWith(
+                        fontSize: 20,
+                      ),
                     ),
                   ],
                 ),
@@ -95,21 +97,20 @@ class ExerciseCard extends StatelessWidget {
   }
 
   int getIntNumber() {
-    //int length = json.decode(exercise!.data!).length;
     return exercise!.data.length;
   }
 
 //return the number of sets
   String getSetsNumber() {
-    int length = exercise!.data.length;//json.decode(exercise!.data).length;
+    int length = exercise!.data.length;
     return length < 2
-        ? (length.toString() + " Set")
-        : (length.toString() + " Sets");
+        ? (length.toString() + " Set, " + "Total Volume: " + exercise!.totalSets.toString())
+        : (length.toString() + " Sets, " + "Total Volume: " + exercise!.totalSets.toString());
   }
 
 //build data
   Widget buildDataList(Exercise exercise, BuildContext context) {
-    List<Data> dataDecoded = exercise.data;//json.decode(exercise.data!);
+    List<Data> dataDecoded = exercise.data;
 
     return Column(
       children: [
