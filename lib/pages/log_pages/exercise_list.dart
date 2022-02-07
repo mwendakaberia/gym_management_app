@@ -35,7 +35,6 @@ class _ExerciseListState extends State<ExerciseList> {
 
   @override
   Widget build(BuildContext context) {
-    print("date --- ${date.toString()}");
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -137,36 +136,42 @@ class _ExerciseListState extends State<ExerciseList> {
     return StreamBuilder(
       stream: context.watch<ExerciseDetailProvider>().getAllData(date),
       builder: (context, AsyncSnapshot<List<Exercise>> snapshot) {
-        final List<Exercise> exercises = snapshot.data!;
-        if (snapshot.hasData) {
-          if (snapshot.data!.isNotEmpty) {
-            return ListView.builder(
-              padding: EdgeInsets.all(6.0),
-              itemCount: exercises.length,
-              itemBuilder: (_, index) {
-                final exercise = exercises[index];
-                return ExerciseCard(
-                  exercise: exercise,
-                  index: index,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ExerciseDetail(
-                          exercise: exercise,
-                          isEdit: true,
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }else if (snapshot.connectionState == ConnectionState.active || snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return const Text('Error');
+          }else {
+            final List<Exercise> exercises = snapshot.data!;
+              return ListView.builder(
+                padding: EdgeInsets.all(6.0),
+                itemCount: exercises.length,
+                itemBuilder: (_, index) {
+                  final exercise = exercises[index];
+                  return ExerciseCard(
+                    exercise: exercise,
+                    index: index,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ExerciseDetail(
+                            exercise: exercise,
+                            isEdit: true,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            );
-          } else {
-            return EmptyPage();
-          }
-        } else {
-          return Center(child: CircularProgressIndicator());
+                      );
+                    },
+                  );
+                },
+              );
+          } 
+        }else {
+          return Center(
+            child: Text('No Data'),
+          );
         }
       },
     );
