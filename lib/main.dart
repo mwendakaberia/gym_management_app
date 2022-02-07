@@ -1,3 +1,5 @@
+
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +53,10 @@ void main() async {
         Provider(create: (_) => FirestoreService()),
         Provider(create: (_) => ExerciseDetailProvider()),
       ],
-      child: MyApp(
-        appTheme: AppTheme(),
+      child: DevicePreview(
+        builder: (context) => MyApp(
+          appTheme: AppTheme(),
+        ),
       ),
     ),
   );
@@ -65,6 +69,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
       theme: appTheme.light,
       darkTheme: appTheme.dark,
