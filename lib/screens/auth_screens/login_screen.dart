@@ -23,8 +23,8 @@ class _LoginScreenState extends State <LoginScreen> {
   //form key
   final _formKey = GlobalKey<FormState>();
   //editing controller
-  final TextEditingController emailController =  new TextEditingController(text: "dheerajv634@gmail.com");
-  final TextEditingController passwordController =  new TextEditingController(text: "asdfghjkl");
+  final TextEditingController emailController =   TextEditingController();
+  final TextEditingController passwordController =   TextEditingController();
 
   //firebase
   final _auth = FirebaseAuth.instance;
