@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_bar_gym/models/user_model.dart';
 
+
 import 'chatPagesWIdgets/message_bubble.dart';
 
 class PowerLiftingChatPage extends StatefulWidget {

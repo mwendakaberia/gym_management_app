@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:the_bar_gym/models/user_model.dart';
+
 import 'package:the_bar_gym/pages/chatpages/group_fitness_chat_page.dart';
 import 'package:the_bar_gym/pages/chatpages/power_lifting_chat_page.dart';
 import 'package:the_bar_gym/pages/chatpages/strong_man_chat_page.dart';
@@ -13,7 +14,7 @@ import 'package:the_bar_gym/widgest/avatars.dart';
 import 'package:the_bar_gym/widgest/icons_buttons.dart';
 import 'package:the_bar_gym/widgest/spped_dials/home_page_speeddial.dart';
 
-import '../theme.dart';
+import 'package:the_bar_gym/theme.dart';
 import 'chatpages/body_building_chat_page.dart';
 
 class StreamPage extends StatelessWidget {
@@ -25,7 +26,7 @@ class StreamPage extends StatelessWidget {
   final ValueNotifier<String> title = ValueNotifier('Welcome To The Bar');
   final pages = [
     PowerLiftingChatPage(),
-   BodyBuildingChatPage(),
+    BodyBuildingChatPage(),
     StrongManChatPage(),
     GroupFitnessChatPage(),
 
@@ -146,10 +147,10 @@ class ChatSelecitonPage extends StatelessWidget {
     return Center(child: ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
-        chatSelectTile(chatTitle: 'Power Lifting', route: PowerLiftingChatPage(),),
-        chatSelectTile(chatTitle: 'Body Building', route:BodyBuildingChatPage(),),
-        chatSelectTile(chatTitle: 'Strong Man', route: StrongManChatPage(),),
-        chatSelectTile(chatTitle: 'Group Fitness', route: GroupFitnessChatPage(),),
+        chatSelectTile(chatTitle: 'Power Lifting', route: PowerLiftingChatPage(), groupPic: 'images/snatch.png',),
+        chatSelectTile(chatTitle: 'Body Building', route:BodyBuildingChatPage(), groupPic:'images/bicep.png',),
+        chatSelectTile(chatTitle: 'Strong Man', route: StrongManChatPage(), groupPic: 'images/weightrack.png',),
+        chatSelectTile(chatTitle: 'Group Fitness', route: GroupFitnessChatPage(), groupPic: 'images/dumbel.png',),
 
 
       ],
@@ -158,11 +159,11 @@ class ChatSelecitonPage extends StatelessWidget {
 }
 
 class chatSelectTile extends StatelessWidget {
- chatSelectTile({
+  chatSelectTile({
     Key? key,
-    required this.chatTitle, required this.route
+    required this.chatTitle, required this.route, required this.groupPic,
   }) : super(key: key);
-
+  final String groupPic;
   final String chatTitle;
   dynamic route = HomeScreen();
   @override
@@ -176,46 +177,69 @@ class chatSelectTile extends StatelessWidget {
           return route;
         }),
       );},
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.transparent,
+          elevation: 10,
+          child: Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.cardDark,
 
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: CircleAvatar(radius: 45,),
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.accent,
-                    borderRadius: BorderRadius.all(Radius.circular(20),
+            ),
+
+            child: Column(
+
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Row(
+
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(radius: 35,
+
+                        backgroundImage: AssetImage(groupPic),),
                     ),
-                  ),
-                  child: Padding(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
-                    child: Text(chatTitle),
-                  ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.accent,
+                            borderRadius: BorderRadius.all(Radius.circular(20),
+                            ),
+                          ),
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+                            child: Text(chatTitle, style: TextStyle(fontWeight: FontWeight.bold, ),),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  // child: Text(
+                  //   Jiffy(message.createdAt.toLocal()).jm,
+                  //   style: const TextStyle(
+                  //     color: AppColors.textFaded,
+                  //     fontSize: 10,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                )
+              ],),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            // child: Text(
-            //   Jiffy(message.createdAt.toLocal()).jm,
-            //   style: const TextStyle(
-            //     color: AppColors.textFaded,
-            //     fontSize: 10,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-          )
-      ],),
+        ),
+      ),
     );
   }
 }
