@@ -50,7 +50,6 @@ void main() async {
         ),
         Provider(create: (_) => FirestoreService()),
         Provider(create: (_) => ExerciseDetailProvider()),
-        Provider(create: (_) => FirestoreService()),
       ],
       child: MyApp(
         appTheme: AppTheme(),
