@@ -1,6 +1,9 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_bar_gym/screens/home_screen.dart';
+
+
 
 class FlutterFireAuthService {
   final FirebaseAuth _firebaseAuth;
@@ -9,18 +12,15 @@ class FlutterFireAuthService {
 
   Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
 
-  User? get currentUser => _firebaseAuth.currentUser;
-
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
 
   Future<String?> signIn(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+      {required String email, required String password, required BuildContext context}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
+
           email: email, password: password);
       print("Signed In");
       Navigator.push(
@@ -37,9 +37,7 @@ class FlutterFireAuthService {
   }
 
   Future<String?> signUp(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+      {required String email, required String password, required BuildContext context}) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);

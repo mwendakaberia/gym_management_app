@@ -7,12 +7,14 @@ ThemeData light = ThemeData(
   brightness: Brightness.light,
   primaryColor: MyColors.primaryColor,
   accentColor: MyColors.accentColor,
+  primarySwatch: Colors.deepPurple,
 );
 
 ThemeData dark = ThemeData(
   brightness: Brightness.dark,
   primaryColor: MyColors.primaryColor,
   accentColor: MyColors.accentColor,
+  primarySwatch: Colors.deepPurple,
 );
 
 class ThemeNotifier extends ChangeNotifier {

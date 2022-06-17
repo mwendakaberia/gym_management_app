@@ -35,7 +35,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     Uri uri = _avatar.svgUri;
-    Size size = MediaQuery.of(context).size;
     //first name  field
     final userNameField = TextFormField(
         autofocus: false,
@@ -201,35 +200,44 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           },
         ),
       ),
-      body: SingleChildScrollView(
+      body: Center(
         child: Column(
           children: [
+            SizedBox(height: 35),
             SizedBox(
+                // height: 200,
                 width: MediaQuery.of(context).size.width,
                 child: Image.asset("images/bar2.jpg",
-                  fit: BoxFit.contain,
-                ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formkey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[      
-                    userNameField,
-                    SizedBox(height: size.height*0.02),
-                    fullNameField,
-                    SizedBox(height: size.height*0.02),
-                    emailField,
-                    SizedBox(height: size.height*0.02),
-                    passwordField,
-                    SizedBox(height: size.height*0.02),
-                    confirmPasswordField,
-                    SizedBox(height: size.height*0.03),
-                    signUpButton,
-                  ],
+                  fit: BoxFit.contain,)),
+            SingleChildScrollView(
+              child: Container(
+                // color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Form(
+                    key: _formkey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+
+
+                        userNameField,
+                        SizedBox(height: 20),
+                        fullNameField,
+                        SizedBox(height: 20),
+                        emailField,
+                        SizedBox(height: 20),
+                        passwordField,
+                        SizedBox(height: 20),
+                        confirmPasswordField,
+                        SizedBox(height: 20),
+                        signUpButton,
+                        SizedBox(height: 15),
+
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

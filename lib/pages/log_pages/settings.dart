@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:the_bar_gym/db/moor_db.dart';
 import 'package:the_bar_gym/utils/colors.dart';
 import 'package:the_bar_gym/utils/enums.dart';
 import 'package:the_bar_gym/utils/helpers.dart';
@@ -186,12 +187,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  // Provider.of<AppDatabase>(context, listen: false)
-                  //     .deleteAllData()
-                  //     .then(
-                  //       (value) => snackBar(context,
-                  //           content: 'Deleted $value Exercise(s)'),
-                  //     );
+                  Provider.of<AppDatabase>(context, listen: false)
+                      .deleteAllData()
+                      .then(
+                        (value) => snackBar(context,
+                            content: 'Deleted $value Exercise(s)'),
+                      );
                 },
               )
             ],

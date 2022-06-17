@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "968654133575",
-    "firebase_url": "https://gym-management-e98f3-default-rtdb.firebaseio.com",
-    "project_id": "gym-management-e98f3",
-    "storage_bucket": "gym-management-e98f3.appspot.com"
+    "project_number": "797072062063",
+    "firebase_url": "https://test-projects-137d7-default-rtdb.firebaseio.com",
+    "project_id": "test-projects-137d7",
+    "storage_bucket": "test-projects-137d7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:968654133575:android:6bf6f7ccdc3a4d8f5a5462",
+        "mobilesdk_app_id": "1:797072062063:android:c905b783877f3a4b1c3f9a",
         "android_client_info": {
-          "package_name": "com.example.firebase_image_upload"
+          "package_name": "com.example.firebaseImageUpload"
         }
       },
       "oauth_client": [
         {
-          "client_id": "968654133575-l4hnn9tqljhlf5vv2t40nu35kmq8unoh.apps.googleusercontent.com",
+          "client_id": "797072062063-p1p18m1qg8t652b08ck17bju908ka7ui.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAezuTTkLtb0WkxawBVjs-BpX2s_uwFCvc"
+          "current_key": "AIzaSyD9P35e4upQu9cFZ2v9CXfE5ngGsYriYLA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "968654133575-l4hnn9tqljhlf5vv2t40nu35kmq8unoh.apps.googleusercontent.com",
+              "client_id": "797072062063-p1p18m1qg8t652b08ck17bju908ka7ui.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "968654133575-im8n0gf1hobb9eov92dldd8ig3gjlamb.apps.googleusercontent.com",
+              "client_id": "797072062063-3llnoakcvr3fl6eavrf1k141iq4g2t5k.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.chatPrototype"
+                "bundle_id": "com.example.thebargym"
               }
             }
           ]
@@ -44,34 +44,42 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:968654133575:android:86371b9d7b918ff65a5462",
+        "mobilesdk_app_id": "1:797072062063:android:8d3e2c6c332cc6491c3f9a",
         "android_client_info": {
           "package_name": "com.example.the_bar_gym"
         }
       },
       "oauth_client": [
         {
-          "client_id": "968654133575-l4hnn9tqljhlf5vv2t40nu35kmq8unoh.apps.googleusercontent.com",
+          "client_id": "797072062063-7cv7615lfs2m49936vjmqg1d6aul1aae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.the_bar_gym",
+            "certificate_hash": "c49ca91b5453e7074c232a43ef75fd3b4ed43f3d"
+          }
+        },
+        {
+          "client_id": "797072062063-p1p18m1qg8t652b08ck17bju908ka7ui.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAezuTTkLtb0WkxawBVjs-BpX2s_uwFCvc"
+          "current_key": "AIzaSyD9P35e4upQu9cFZ2v9CXfE5ngGsYriYLA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "968654133575-l4hnn9tqljhlf5vv2t40nu35kmq8unoh.apps.googleusercontent.com",
+              "client_id": "797072062063-p1p18m1qg8t652b08ck17bju908ka7ui.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "968654133575-im8n0gf1hobb9eov92dldd8ig3gjlamb.apps.googleusercontent.com",
+              "client_id": "797072062063-3llnoakcvr3fl6eavrf1k141iq4g2t5k.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.chatPrototype"
+                "bundle_id": "com.example.thebargym"
               }
             }
           ]

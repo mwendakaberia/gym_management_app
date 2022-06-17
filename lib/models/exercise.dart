@@ -82,23 +82,23 @@ class Exercise {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Exercise &&
-      other.name == name &&
-      other.sets == sets &&
-      listEquals(other.data, data) &&
-      other.note == note &&
-      other.date == date &&
-      other.totalSets == totalSets;
+        other.name == name &&
+        other.sets == sets &&
+        listEquals(other.data, data) &&
+        other.note == note &&
+        other.date == date &&
+        other.totalSets == totalSets;
   }
 
   @override
   int get hashCode {
     return name.hashCode ^
-      sets.hashCode ^
-      data.hashCode ^
-      note.hashCode ^
-      date.hashCode ^
-      totalSets.hashCode;
+    sets.hashCode ^
+    data.hashCode ^
+    note.hashCode ^
+    date.hashCode ^
+    totalSets.hashCode;
   }
 }

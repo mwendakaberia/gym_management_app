@@ -59,13 +59,11 @@ class ExerciseCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(
-                      getSetsNumber(), //returns the number of sets
-                      style: CardSubTitleStyle.dark,
-                    ),
-                  ],
+                Text(
+                  getSetsNumber(), //returns the number of sets
+                  style: isThemeDark(context)
+                      ? CardSubTitleStyle.dark
+                      : CardSubTitleStyle.light,
                 ),
 
                 //horizontal line break lol
@@ -94,11 +92,6 @@ class ExerciseCard extends StatelessWidget {
     );
   }
 
-  int getIntNumber() {
-    int length = json.decode(exercise!.data!).length;
-    return length;
-  }
-
 //return the number of sets
   String getSetsNumber() {
     int length = json.decode(exercise!.data!).length;
@@ -110,7 +103,6 @@ class ExerciseCard extends StatelessWidget {
 //build data
   Widget buildDataList(Exercise exercise, BuildContext context) {
     List dataDecoded = json.decode(exercise.data!);
-
     return Column(
       children: [
         for (var i = 0; i < dataDecoded.length; i++)
@@ -118,20 +110,33 @@ class ExerciseCard extends StatelessWidget {
             children: [
               Text("#${i + 1} ", style: CardPreNumStyle.darkLight),
               Text(
-                  Provider.of<UnitsNotifier>(context).weightUnit ==
-                          WeightUnit.kg
-                      ? '${dataDecoded[i]['weight']['kg']}'
-                      : '${dataDecoded[i]['weight']['lbs']}',
-                  style: CardSubTitleStyle.dark),
+                Provider.of<UnitsNotifier>(context).weightUnit == WeightUnit.kg
+                    ? '${dataDecoded[i]['weight']['kg']}'
+                    : '${dataDecoded[i]['weight']['lbs']}',
+                style: isThemeDark(context)
+                    ? CardValueStyle.dark
+                    : CardValueStyle.light,
+              ),
               Text(
                   Provider.of<UnitsNotifier>(context).weightUnit ==
                           WeightUnit.kg
                       ? ' Kg'
                       : ' Lbs', //" Kg",
-                  style: CardSubTitleStyle.dark),
-              Text(" for ", style: CardSubTitleStyle.dark),
-              Text('${dataDecoded[i]['reps']}', style: CardSubTitleStyle.dark),
-              Text(" Reps", style: CardSubTitleStyle.dark),
+                  style: isThemeDark(context)
+                      ? CardMainStyle.dark
+                      : CardMainStyle.light),
+              Text(" for ",
+                  style: isThemeDark(context)
+                      ? CardMainStyle.dark
+                      : CardMainStyle.light),
+              Text('${dataDecoded[i]['reps']}',
+                  style: isThemeDark(context)
+                      ? CardValueStyle.dark
+                      : CardValueStyle.light),
+              Text(" Reps",
+                  style: isThemeDark(context)
+                      ? CardMainStyle.dark
+                      : CardMainStyle.light),
             ],
           ),
       ],

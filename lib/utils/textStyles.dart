@@ -4,7 +4,7 @@ import 'package:the_bar_gym/utils/colors.dart';
 
 class AppBarTitleStyle {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.black,
     fontSize: 30.0,
     fontStyle: FontStyle.italic,
     fontWeight: FontWeight.w800,
@@ -12,7 +12,7 @@ class AppBarTitleStyle {
   );
 
   static const dark = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.white,
     fontSize: 30.0,
     fontStyle: FontStyle.italic,
     fontWeight: FontWeight.w800,
@@ -23,12 +23,12 @@ class AppBarTitleStyle {
 //card styles
 class CardTitleStyle {
   static const light = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.accentVarientColor,
     fontSize: 28.0,
     fontWeight: FontWeight.w800,
   );
   static const dark = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.accentColor,
     fontSize: 28.0,
     fontWeight: FontWeight.w800,
   );
@@ -36,7 +36,7 @@ class CardTitleStyle {
 
 class CardExNumberStyle {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.lightGrey,
     fontSize: 24.0,
     fontWeight: FontWeight.w900,
   );
@@ -44,12 +44,12 @@ class CardExNumberStyle {
 
 class CardSubTitleStyle {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.darkGrey,
     fontSize: 24.0,
     fontWeight: FontWeight.w900,
   );
   static const dark = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.white,
     fontSize: 24.0,
     fontWeight: FontWeight.w900,
   );
@@ -57,7 +57,7 @@ class CardSubTitleStyle {
 
 class CardPreNumStyle {
   static const darkLight = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.lightGrey,
     fontSize: 18.0,
     fontWeight: FontWeight.w900,
     height: 1.2,
@@ -66,13 +66,13 @@ class CardPreNumStyle {
 
 class CardValueStyle {
   static const light = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.accentVarientColor,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.2,
   );
   static const dark = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.accentColor,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.2,
@@ -81,13 +81,15 @@ class CardValueStyle {
 
 class CardMainStyle {
   static const light = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.black,
+    //color: AppColors.textDark,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.2,
   );
   static const dark = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.white,
+    //color: AppColors.textDark,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.2,
@@ -96,14 +98,16 @@ class CardMainStyle {
 
 class AddSetButtonStyle {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.darkGrey,
+    //color: AppColors.textLigth,
     fontSize: 18.0,
     fontWeight: FontWeight.w900,
     fontStyle: FontStyle.italic,
     height: 1.2,
   );
   static const dark = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.lightGrey,
+    //color: AppColors.textDark,
     fontSize: 18.0,
     fontWeight: FontWeight.w900,
     fontStyle: FontStyle.italic,
@@ -113,14 +117,16 @@ class AddSetButtonStyle {
 
 class InputLabelStyle {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.accentColor,
+    //color: AppColors.textLigth,
     fontSize: 18.0,
   );
 }
 
 class InputHitnStyle {
   static const light = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.lightGrey,
+    //color: AppColors.textDark,
     fontSize: 18.0,
   );
 }
@@ -129,14 +135,16 @@ class InputHitnStyle {
 
 class SetListCount {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.lightGrey,
+    //color: AppColors.textLigth,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.5,
   );
 
   static const dark = TextStyle(
-    color: AppColors.textDark,
+    color: MyColors.lightGrey,
+    //color: AppColors.textDark,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.5,
@@ -145,7 +153,8 @@ class SetListCount {
 
 class SetListValue {
   static const light = TextStyle(
-    color: AppColors.textLigth,
+    color: MyColors.accentVarientColor,
+    //color: AppColors.textLigth,
     fontSize: 18.0,
     fontWeight: FontWeight.w800,
     height: 1.5,
